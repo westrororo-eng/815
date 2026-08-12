@@ -53,15 +53,11 @@
     width:100%;
     max-width:680px;
     background:
-      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0 2px, transparent 2px 4px),
+      linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.02) 100%),
       var(--paper);
-    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.05);
-    clip-path: polygon(
-      0.5% 2%, 4% 0%, 12% 1%, 22% 0.3%, 35% 1.2%, 48% 0%, 61% 0.8%, 74% 0%, 88% 1%, 97% 0%, 100% 3%,
-      99.3% 12%, 100% 24%, 99.4% 37%, 100% 50%, 99.3% 63%, 100% 76%, 99.5% 89%, 100% 97%,
-      96% 100%, 88% 99.2%, 76% 100%, 63% 99.3%, 50% 100%, 37% 99.4%, 24% 100%, 12% 99.2%, 3% 100%,
-      0% 96%, 0.7% 84%, 0% 71%, 0.6% 58%, 0% 45%, 0.5% 32%, 0% 19%, 0.4% 8%
-    );
+    border: 1px solid var(--paper-shadow);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.5);
     animation: settle 0.6s ease-out;
   }
   @keyframes settle{
@@ -371,18 +367,28 @@
   /* 고풍스러운 전통 상장 형태의 인증서 스타일 */
   .certificate-frame {
     border: 3px solid var(--gold);
-    outline: 8px double var(--gold);
-    outline-offset: -12px;
     background: #faf6ed;
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(224, 178, 63, 0.08), transparent 70%),
-      repeating-linear-gradient(0deg, rgba(0,0,0,0.01) 0 2px, transparent 2px 4px);
+      radial-gradient(circle at 50% 50%, rgba(224, 178, 63, 0.08), transparent 70%);
     padding: 44px 36px 36px;
-    border-radius: 4px;
+    border-radius: 6px;
     position: relative;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 0 30px rgba(184,144,31,0.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12), inset 0 0 25px rgba(184,144,31,0.08);
     margin: 12px 0;
     text-align: center;
+  }
+
+  /* html2canvas에서 깨지지 않는 선명한 내측 이중 테두리 구현 */
+  .certificate-frame::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    border: 1.5px solid var(--gold);
+    border-radius: 3px;
+    pointer-events: none;
   }
 
   /* 귀퉁이 전통 문양 */
@@ -393,6 +399,7 @@
     color: var(--gold);
     opacity: 0.85;
     pointer-events: none;
+    z-index: 2;
   }
   .cert-corner.top-left { top: 14px; left: 14px; }
   .cert-corner.top-right { top: 14px; right: 14px; transform: rotate(90deg); }
@@ -461,12 +468,11 @@
   .cert-statement {
     font-family: 'Song Myung', serif;
     font-size: 16.5px;
-    line-height: 2.0;
+    line-height: 1.95;
     color: var(--ink);
     margin: 20px 12px 24px;
     word-break: keep-all;
-    text-align: justify;
-    text-justify: interpunct;
+    text-align: center;
   }
 
   .cert-reflection-wrapper {
@@ -571,22 +577,31 @@
     position:fixed; top:14px; right:14px; z-index:60;
     font-family:'Noto Sans KR', sans-serif;
     font-size:12px; letter-spacing:0.04em;
-    background: rgba(238,227,200,0.1);
-    color: rgba(238,227,200,0.85);
-    border: 1px solid rgba(238,227,200,0.35);
+    background: rgba(28, 42, 71, 0.85);
+    color: #eee3c8;
+    border: 1px solid rgba(238,227,200,0.4);
     padding: 7px 14px;
     border-radius: 20px;
     cursor:pointer;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     transition: background 0.15s ease;
   }
-  .sound-toggle:hover{ background: rgba(238,227,200,0.2); }
+  .sound-toggle:hover{ background: rgba(28, 42, 71, 0.95); }
 
   @media (max-width:480px){
-    .card-inner{ padding:28px 20px 24px; }
+    .card-inner{ padding:20px 12px 20px; }
     h1.title{ font-size:24px; }
     .narration{ font-size:15.5px; }
-    .cert-header { font-size: 21px; }
-    .cert-details { font-size: 13px; padding: 12px; }
+    .certificate-frame { padding: 32px 14px 24px; }
+    .cert-header { font-size: 24px; letter-spacing: 0.18em; text-indent: 0.18em; }
+    .cert-subtitle { font-size: 9.5px; letter-spacing: 0.2em; margin-bottom: 20px; }
+    .cert-statement { font-size: 14.5px; line-height: 1.85; margin: 16px 2px 20px; text-align: center; word-break: keep-all; }
+    .cert-recipient-grid { width: 100%; font-size: 14px; }
+    .cert-recipient-label { width: 70px; padding-right: 6px; }
+    .cert-issuer { font-size: 17px; letter-spacing: 0.1em; }
+    .cert-official-seal { width: 50px; height: 50px; font-size: 12px; }
+    .cert-serial { font-size: 11px; padding-left: 6px; }
   }
 
   @media print {
@@ -1347,7 +1362,7 @@ function render(){
             <div class="cert-date">${userData.completedAt}</div>
             <div class="cert-issuer-container">
               <span class="cert-issuer">송호고등학교 인문사회부</span>
-              <div class="cert-official-seal">역사<br>체험<br>완료</div>
+              <div class="cert-official-seal">역사<br>체험인</div>
             </div>
           </div>
         </div>
@@ -1357,22 +1372,23 @@ function render(){
           <button class="action-btn secondary" id="printBtn">🖨️ 인쇄 / PDF 저장</button>
           <button class="action-btn secondary" id="restartAllBtn">처음부터 다시 하기</button>
         </div>
-      </div></div>
-    `;
+      </div></div>`;
 
-    // 이미지 저장 기능 (GitHub Pages 고해상도 대응 보완)
+    // 이미지 저장 기능 (GitHub Pages 및 고해상도 대응 보완)
     document.getElementById('downloadImgBtn').onclick = () => {
       Sound.click();
       const certEl = document.getElementById('certFrame');
       if (window.html2canvas && certEl) {
-        // 구글 웹폰트 로딩이 완전히 완료된 후 캡처 실행 (글자 깨짐 방지)
         document.fonts.ready.then(() => {
           html2canvas(certEl, {
-            scale: 3, // 3배율 고해상도 렌더링 (선명도 대폭 향상)
+            scale: 3, // 3배율 선명한 고해상도 출력
             backgroundColor: '#faf6ed',
-            useCORS: true, // GitHub Pages 배포 시 외부 폰트/이미지 보안 차단 방지
+            useCORS: true,
             allowTaint: true,
-            logging: false
+            logging: false,
+            // 캡처 시 테두리 잘림 및 외곽 픽셀화 방지
+            windowWidth: certEl.scrollWidth,
+            windowHeight: certEl.scrollHeight
           }).then(canvas => {
             const link = document.createElement('a');
             link.download = `1945_광복절_체험인증서_${userData.studentName || '인증서'}.png`;
