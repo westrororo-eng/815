@@ -88,7 +88,7 @@
     font-size:12px;
     letter-spacing:0.25em;
     color: var(--ink);
-    opacity:0.55;
+    opacity:0.65;
     margin-bottom:6px;
   }
 
@@ -113,8 +113,51 @@
     font-family:'Noto Sans KR', sans-serif;
     font-size:13px;
     color:var(--ink);
-    opacity:0.6;
+    opacity:0.7;
     margin-bottom:22px;
+  }
+
+  /* 입력 폼 스타일링 */
+  .input-box-group {
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px dashed var(--paper-shadow);
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+  .input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  .input-row:last-child { margin-bottom: 0; }
+  .input-label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--indigo);
+  }
+  .text-input, .textarea-input {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--paper-shadow);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .text-input:focus, .textarea-input:focus {
+    border-color: var(--indigo);
+    box-shadow: 0 0 0 3px rgba(28,42,71,0.15);
+  }
+  .textarea-input {
+    min-height: 90px;
+    resize: vertical;
+    line-height: 1.5;
   }
 
   .scene{
@@ -185,7 +228,7 @@
 
   .start-btn, .action-btn{
     display:block;
-    margin: 24px auto 0;
+    margin: 20px auto 0;
     font-family:'Noto Sans KR', sans-serif;
     font-weight:700;
     font-size:15px;
@@ -193,7 +236,7 @@
     background: var(--indigo);
     color: var(--paper);
     border:none;
-    padding: 13px 30px;
+    padding: 13px 28px;
     border-radius: 3px;
     cursor:pointer;
     transition: transform 0.15s ease, background 0.15s ease;
@@ -235,13 +278,13 @@
     margin: 4px 0 6px;
   }
 
-  /* 엔딩 효과 */
+  /* 엔딩 효과 & 인증서 스타일 */
   .ending-glow{
     position:absolute; inset:0;
     background: radial-gradient(circle at 50% 20%, rgba(224,178,63,0.35), transparent 60%);
     pointer-events:none;
   }
-  .taegeuk{ width:64px; height:64px; margin:0 auto 14px; display:block; }
+  .taegeuk{ width:60px; height:60px; margin:0 auto 12px; display:block; }
 
   .recap{
     font-family:'Noto Sans KR', sans-serif;
@@ -253,6 +296,98 @@
     margin-top: 18px;
   }
   .recap b{ color:var(--indigo); }
+
+  /* 고풍스러운 체험 인증서 양식 */
+  .certificate-frame {
+    border: 6px double var(--gold);
+    background: #fcf8ee;
+    padding: 28px 22px;
+    border-radius: 4px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(184,144,31,0.15);
+    margin-top: 10px;
+    text-align: center;
+  }
+  .cert-header {
+    font-family: 'Song Myung', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--indigo);
+    margin-bottom: 6px;
+    letter-spacing: 0.1em;
+  }
+  .cert-subtitle {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .cert-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--paper-shadow);
+    border-radius: 4px;
+  }
+  .cert-item { display: flex; }
+  .cert-label { font-weight: 700; color: var(--indigo); width: 85px; flex-shrink: 0; }
+  .cert-val { color: var(--ink); flex-grow: 1; word-break: break-all; }
+  .cert-reflection-box {
+    background: #f3edd9;
+    border-left: 3px solid var(--gold);
+    padding: 10px 14px;
+    font-style: italic;
+    margin-top: 4px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .cert-statement {
+    font-family: 'Song Myung', serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin: 20px 0 24px;
+    word-break: keep-all;
+  }
+  .cert-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--paper-shadow);
+  }
+  .cert-date {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .cert-seal {
+    width: 64px;
+    height: 64px;
+    border: 2px solid var(--red);
+    border-radius: 50%;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Song Myung', serif;
+    font-size: 13px;
+    font-weight: 700;
+    transform: rotate(-12deg);
+    opacity: 0.85;
+    user-select: none;
+    box-shadow: inset 0 0 4px rgba(164,41,31,0.2);
+  }
 
   .rift{
     position:fixed; inset:0; z-index:50;
@@ -287,10 +422,14 @@
     .card-inner{ padding:28px 20px 24px; }
     h1.title{ font-size:24px; }
     .narration{ font-size:15.5px; }
+    .cert-header { font-size: 21px; }
+    .cert-details { font-size: 13px; padding: 12px; }
   }
 
-  @media (prefers-reduced-motion: reduce){
-    *{ animation:none !important; transition:none !important; }
+  @media print {
+    body { background: white !important; }
+    .sound-toggle, .action-row, .eyebrow, .subtitle { display: none !important; }
+    .card { box-shadow: none !important; clip-path: none !important; width: 100% !important; max-width: 100% !important; }
   }
 </style>
 </head>
@@ -301,6 +440,17 @@
 <button class="sound-toggle" id="soundToggle" aria-label="소리 켜기/끄기">🔊 소리 켬</button>
 
 <script>
+/* 구글 시트 연동 URL (설정 시 학생들의 결과가 시트로 전송됨) */
+const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbycYKc5Pd9m1J2QG98LWcYQkgYspvecL828jm1plmNHeSSeP7xdoZE8pcInOGBikAqa_Q/exec"; 
+
+// 사용자 등록 정보 데이터
+const userData = {
+  studentId: '',
+  studentName: '',
+  reflection: '',
+  completedAt: ''
+};
+
 const Sound = {
   ctx:null, master:null, enabled:true,
   drone:null, statics:null, tick:null, _nb:null,
@@ -420,7 +570,7 @@ const Sound = {
     else if(id === 's4'){ this.startDrone(); this.startStatic(0.03); }
     else if(id === 's4b'){ this.startDrone(); this.startStatic(0.045); this.startTick(); }
     else if(id === 's5'){ this.startDrone(); this.startStatic(0.06); }
-    else if(id === 'ending'){ this.stopDrone(); this.stopStatic(); this.liberation(); }
+    else if(id === 'ending' || id === 'certificate'){ this.stopDrone(); this.stopStatic(); this.liberation(); }
   }
 };
 
@@ -513,7 +663,6 @@ const SVG_FALLBACKS = {
   </svg>`
 };
 
-/* 사용자가 이미지를 01.jpg, 01_2.jpg, image_2d2427.jpg 등 어떤 이름으로 올려도 자동 감지되도록 다중 경로 설정 */
 function handleImgError(img, fallbackKey) {
   const fallbacks = JSON.parse(img.dataset.fallbacks || '[]');
   if (fallbacks.length > 0) {
@@ -546,116 +695,120 @@ const IMAGES = {
 
 const STAGES = 5;
 
-const scenes = {
-  intro: {
-    type:'intro',
-    title:'1945, 그 날',
-    subtitle:'그 날을 직접 맞이하고 현재로 돌아오라',
-    body:`특별전 마지막 전시물인 낡은 진공관 라디오. 손끝이 스치는 순간 '지지직' 소리와 함께 눈앞이 하얗게 흔들립니다.<br><br>
-    눈을 떠보니 흙먼지 날리는 골목, 낯선 글씨의 벽보, 그리고 몸뻬 바지를 입은 사람들이 보입니다.<br><br>
-    <b>1945년 8월 15일, 광복의 그 순간까지 무사히 살아남아야만 다시 현재로 돌아갈 수 있습니다.</b><br>
-    선택을 신중히 하세요. 성급한 행동은 위험을 부릅니다.`,
-    scene: null,
-    start:true
-  },
+function getScenes() {
+  const name = userData.studentName || '동무';
+  
+  return {
+    intro: {
+      type:'intro',
+      title:'1945, 그 날',
+      subtitle:'그 날을 직접 맞이하고 현재로 돌아오라',
+      body:`특별전 마지막 전시물인 낡은 진공관 라디오. 손끝이 스치는 순간 '지지직' 소리와 함께 눈앞이 하얗게 흔들립니다.<br><br>
+      눈을 떠보니 흙먼지 날리는 골목, 낯선 글씨의 벽보, 그리고 몸뻬 바지를 입은 사람들이 보입니다.<br><br>
+      <b>1945년 8월 15일, 광복의 그 순간까지 무사히 살아남아야만 다시 현재로 돌아갈 수 있습니다.</b><br>
+      선택을 신중히 하세요. 성급한 행동은 위험을 부릅니다.`,
+      scene: null,
+      start:true
+    },
 
-  s1: {
-    stageNum:1, type:'choice', scene: IMAGES.stage1,
-    title:'1. 낯선 골목',
-    narration:`눈을 떠보니 흙먼지 날리는 골목입니다. 담벼락에는 낯선 글자의 벽보가 붙어 있고, 저 앞에서는 제복을 입은 <b>순사</b>가 순찰을 돌고 있습니다. 몸뻬 바지를 입은 아주머니들이 종종걸음으로 지나갑니다. 무언가 심상치 않은 공기입니다.`,
-    prompt:'지금, 당신의 다음 행동은?',
-    choices:[
-      { text:'태극기를 꺼내 흔들며 "독립 만세"를 외친다.', correct:false,
-        fail:'아직 광복의 날이 오지 않았습니다. 지금 만세를 외치면 그 자리에서 곧바로 붙잡히고 맙니다. 1919년 3·1 운동 이후에도 만세 시위를 벌인 이들은 혹독한 탄압을 받았습니다. 아직은 때가 아닙니다.' },
-      { text:'숨을 고르고, 간판과 사람들의 옷차림을 살피며 현재 시점을 파악할 단서를 찾는다.', correct:true, next:'s2' },
-      { text:'가까운 아무 집에나 무작정 들어가 도움을 요청한다.', correct:false,
-        fail:'낯선 시대, 낯선 사람에게 무작정 정체를 드러내는 것은 위험합니다. 이 시기에는 밀고와 감시가 일상이었습니다. 먼저 주변 상황부터 파악해야 합니다.' }
-    ]
-  },
+    s1: {
+      stageNum:1, type:'choice', scene: IMAGES.stage1,
+      title:'1. 낯선 골목',
+      narration:`눈을 떠보니 흙먼지 날리는 골목입니다. 담벼락에는 낯선 글자의 벽보가 붙어 있고, 저 앞에서는 제복을 입은 <b>순사</b>가 순찰을 돌고 있습니다. 몸뻬 바지를 입은 아주머니들이 종종걸음으로 지나갑니다. 무언가 심상치 않은 공기입니다.`,
+      prompt:'지금, 당신의 다음 행동은?',
+      choices:[
+        { text:'태극기를 꺼내 흔들며 "독립 만세"를 외친다.', correct:false,
+          fail:'아직 광복의 날이 오지 않았습니다. 지금 만세를 외치면 그 자리에서 곧바로 붙잡히고 맙니다. 1919년 3·1 운동 이후에도 만세 시위를 벌인 이들은 혹독한 탄압을 받았습니다. 아직은 때가 아닙니다.' },
+        { text:'숨을 고르고, 간판과 사람들의 옷차림을 살피며 현재 시점을 파악할 단서를 찾는다.', correct:true, next:'s2' },
+        { text:'가까운 아무 집에나 무작정 들어가 도움을 요청한다.', correct:false,
+          fail:'낯선 시대, 낯선 사람에게 무작정 정체를 드러내는 것은 위험합니다. 이 시기에는 밀고와 감시가 일상이었습니다. 먼저 주변 상황부터 파악해야 합니다.' }
+      ]
+    },
 
-  s2: {
-    stageNum:2, type:'choice', scene: IMAGES.stage2,
-    title:'2. 벽보와 청년',
-    narration:`골목 담벼락에 붙은 전단 조각에서 <b>"연합군, 총공세"</b>, <b>"신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.<br><br>
-    <span class="speaker">청년(동만)</span> "거긴 위험해요… 그런데 낯선 분이시네요. 지금이 몇 년도인지는 아세요?"`,
-    prompt:'동만의 신뢰를 얻으려면 몇 년도라고 대답해야 할까요?',
-    choices:[
-      { text:'"1919년, 3·1 운동이 일어난 해 아닌가요?"', correct:false,
-        fail:'전단에 적힌 "신형 폭탄"이라는 표현은 1945년 8월 히로시마와 나가사키에 투하된 원자폭탄을 가리킵니다. 1919년의 상황과는 맞지 않습니다.' },
-      { text:'"1945년, 일제의 패망이 임박한 시점 같아요."', correct:true, next:'s3',
-        after:'<span class="speaker">동만</span> "맞아요… 곧 무슨 일이 벌어질 것 같은데 다들 쉬쉬하고 있어요. 순사 눈에 띄면 큰일 나니 조심하세요."' },
-      { text:'"1937년, 중일 전쟁이 시작된 해 같아요."', correct:false,
-        fail:'중일 전쟁은 1937년에 시작되었지만, 전단 속 "연합군 총공세"와 "신형 폭탄"이라는 표현은 전쟁이 막바지에 이른 1945년의 상황을 나타냅니다.' }
-    ]
-  },
+    s2: {
+      stageNum:2, type:'choice', scene: IMAGES.stage2,
+      title:'2. 벽보와 청년',
+      narration:`골목 담벼락에 붙은 전단 조각에서 <b>"연합군, 총공세"</b>, <b>"신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.<br><br>
+      <span class="speaker">청년(송호)</span> "거긴 위험해요… 그런데 낯선 분이시네요. 저는 송호라고 합니다. 지금이 몇 년도인지는 아세요?"`,
+      prompt:'송호의 신뢰를 얻으려면 몇 년도라고 대답해야 할까요?',
+      choices:[
+        { text:'"1919년, 3·1 운동이 일어난 해 아닌가요?"', correct:false,
+          fail:'전단에 적힌 "신형 폭탄"이라는 표현은 1945년 8월 히로시마와 나가사키에 투하된 원자폭탄을 가리킵니다. 1919년의 상황과는 맞지 않습니다.' },
+        { text:'"1945년, 일제의 패망이 임박한 시점 같아요."', correct:true, next:'s3',
+          after:`<span class="speaker">송호</span> "맞아요, ${name} 님… 곧 무슨 일이 벌어질 것 같은데 다들 쉬쉬하고 있어요. 순사 눈에 띄면 큰일 나니 조심하세요."` },
+        { text:'"1937년, 중일 전쟁이 시작된 해 같아요."', correct:false,
+          fail:'중일 전쟁은 1937년에 시작되었지만, 전단 속 "연합군 총공세"와 "신형 폭탄"이라는 표현은 전쟁이 막바지에 이른 1945년의 상황을 나타냅니다.' }
+      ]
+    },
 
-  s3: {
-    stageNum:3, type:'choice', scene: IMAGES.stage3,
-    title:'3. 검문',
-    narration:`골목을 벗어나려는데 순사가 앞을 가로막습니다.<br><br>
-    <span class="speaker">순사</span> "거기, 신분증 좀 봅시다."<br>
-    등줄기에 식은땀이 흐릅니다.`,
-    prompt:'어떻게 대응해야 무사히 넘어갈 수 있을까요?',
-    choices:[
-      { text:'"나는 미래에서 왔다"며 당당하게 저항한다.', correct:false,
-        fail:'황당한 말은 의심만 자초할 뿐입니다. 이 시기에는 사소한 꼬투리 하나로도 끌려가 고초를 겪는 사람이 많았습니다. 침착하게 대처해야 합니다.' },
-      { text:'동만이 급히 건네준 낡은 신분증을 내밀며 침착하게 대답한다.', correct:true, next:'s4',
-        after:'순사는 신분증을 힐끗 보더니 별말 없이 지나쳐 갑니다. 동만이 옆에서 조용히 숨을 내쉬고 있습니다.' },
-      { text:'뒤돌아 냅다 달아난다.', correct:false,
-        fail:'도망치는 행동은 오히려 의심을 키웁니다. 등 뒤에서 호루라기 소리가 요란하게 울리기 시작합니다.' }
-    ]
-  },
+    s3: {
+      stageNum:3, type:'choice', scene: IMAGES.stage3,
+      title:'3. 검문',
+      narration:`골목을 벗어나려는데 순사가 앞을 가로막습니다.<br><br>
+      <span class="speaker">순사</span> "거기, 신분증 좀 봅시다."<br>
+      등줄기에 식은땀이 흐릅니다.`,
+      prompt:'어떻게 대응해야 무사히 넘어갈 수 있을까요?',
+      choices:[
+        { text:'"나는 미래에서 왔다"며 당당하게 저항한다.', correct:false,
+          fail:'황당한 말은 의심만 자초할 뿐입니다. 이 시기에는 사소한 꼬투리 하나로도 끌려가 고초를 겪는 사람이 많았습니다. 침착하게 대처해야 합니다.' },
+        { text:'송호가 급히 건네준 낡은 신분증을 내밀며 침착하게 대답한다.', correct:true, next:'s4',
+          after:`순사는 신분증을 힐끗 보더니 별말 없이 지나쳐 갑니다. 송호가 옆에서 조용히 숨을 내쉬며 ${name} 님을 안심시킵니다.` },
+        { text:'뒤돌아 냅다 달아난다.', correct:false,
+          fail:'도망치는 행동은 오히려 의심을 키웁니다. 등 뒤에서 호루라기 소리가 요란하게 울리기 시작합니다.' }
+      ]
+    },
 
-  s4: {
-    stageNum:4, type:'choice', scene: IMAGES.stage4,
-    title:'4. 다락방의 라디오',
-    narration:`동만의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.<br><br>
-    <span class="speaker">동만</span> "오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 사실이라면 우리는 어떻게 해야 할까요?"`,
-    prompt:'정오까지 당신은 어떻게 행동해야 할까요?',
-    choices:[
-      { text:'동네방네 "곧 우리가 해방된다!"며 소문을 낸다.', correct:false,
-        fail:'정식 발표 전에 근거 없는 소문을 퍼뜨리는 것은 위험합니다. 아직 확실하지 않은 상황에서 섣부른 행동은 화를 부를 수 있습니다. 정오까지 차분히 기다려야 합니다.' },
-      { text:'정오까지 침착하게 기다리며 라디오 곁을 지킨다.', correct:true, next:'s4b' },
-      { text:'파출소로 찾아가 무슨 일이 일어나는지 캐묻는다.', correct:false,
-        fail:'제 발로 위험 속에 걸어 들어가는 셈입니다. 정체가 불분명한 상황에서 스스로 의심을 사는 행동은 피해야 합니다.' }
-    ]
-  },
+    s4: {
+      stageNum:4, type:'choice', scene: IMAGES.stage4,
+      title:'4. 다락방의 라디오',
+      narration:`송호의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.<br><br>
+      <span class="speaker">송호</span> "${name} 님, 오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 사실이라면 우리는 어떻게 해야 할까요?"`,
+      prompt:'정오까지 당신은 어떻게 행동해야 할까요?',
+      choices:[
+        { text:'동네방네 "곧 우리가 해방된다!"며 소문을 낸다.', correct:false,
+          fail:'정식 발표 전에 근거 없는 소문을 퍼뜨리는 것은 위험합니다. 아직 확실하지 않은 상황에서 섣부른 행동은 화를 부를 수 있습니다. 정오까지 차분히 기다려야 합니다.' },
+        { text:'정오까지 침착하게 기다리며 라디오 곁을 지킨다.', correct:true, next:'s4b' },
+        { text:'파출소로 찾아가 무슨 일이 일어나는지 캐묻는다.', correct:false,
+          fail:'제 발로 위험 속에 걸어 들어가는 셈입니다. 정체가 불분명한 상황에서 스스로 의심을 사는 행동은 피해야 합니다.' }
+      ]
+    },
 
-  s4b: {
-    stageNum:5, type:'story', scene: IMAGES.stage4,
-    title:'정오 5분 전',
-    narration:`방 안의 공기가 팽팽하게 당겨집니다.<br><br>
-    소식을 들은 이웃들이 하나둘 다락방으로 모여들었습니다. 동만의 어머니는 마른 손으로 치맛자락만 만지작거리고, 옆집 노인은 라디오에 귀를 바짝 붙인 채 미동조차 없습니다. 아무도 입을 열지 않습니다. 괘종시계 초침 소리만이 유난히 크게 들립니다.<br><br>
-    <i>— 무슨 소식일까? 큰일이 일어난거면 어쩌지.</i><br><br>
-    누군가 마른침을 삼키는 소리가 납니다. 창밖의 매미 소리마저 숨을 죽인 듯 조용합니다.<br><br>
-    마침내 시계가 정오를 알립니다.`,
-    nextLabel:'라디오에서 소리가 흘러나온다',
-    next:'s5'
-  },
+    s4b: {
+      stageNum:5, type:'story', scene: IMAGES.stage4,
+      title:'정오 5분 전',
+      narration:`방 안의 공기가 팽팽하게 당겨집니다.<br><br>
+      소식을 들은 이웃들이 하나둘 다락방으로 모여들었습니다. 송호의 어머니는 마른 손으로 치맛자락만 만지작거리고, 옆집 노인은 라디오에 귀를 바짝 붙인 채 미동조차 없습니다. 아무도 입을 열지 않습니다. 괘종시계 초침 소리만이 유난히 크게 들립니다.<br><br>
+      <i>— 무슨 소식일까? 큰일이 일어난 거면 어쩌지.</i><br><br>
+      누군가 마른침을 삼키는 소리가 납니다. 창밖의 매미 소리마저 숨을 죽인 듯 조용합니다.<br><br>
+      마침내 시계가 정오를 알립니다.`,
+      nextLabel:'라디오에서 소리가 흘러나온다',
+      next:'s5'
+    },
 
-  s5: {
-    stageNum:5, type:'choice', scene: IMAGES.stage5,
-    title:'5. 정오의 방송',
-    narration:`지지직 — 잡음 사이로 낯선 억양의 목소리가 흘러나옵니다. 어려운 문어체 일본어인 데다 수신 상태마저 나빠 방 안의 누구도 쉽게 알아듣지 못합니다. 사람들은 서로의 얼굴만 바라봅니다. 시간이 멈춘 듯 몇 분이 지나갑니다.<br><br>
-    방송이 끝나고 무거운 정적이 흐릅니다.<br><br>
-    그때 — 바깥에서 누군가 외치는 소리가 담을 넘어 들려옵니다.<br>
-    <b>"전쟁이 끝났다! 일본이 항복했다!"</b><br><br>
-    동만의 어머니가 소리 없이 눈물을 흘립니다. 35년. 우리말로 마음껏 이름을 부르지 못했던 그 길고 긴 시간이, 지금 이 순간 끝나고 있습니다.<br><br>
-    거리 곳곳에서 함성이 터져 나옵니다. 오늘, 우리는 이 날을 무엇이라 부를까요?`,
-    prompt:'오늘, 이 날의 이름은 무엇일까요?',
-    choices:[
-      { text:'광복절', correct:true, next:'ending' },
-      { text:'삼일절', correct:false,
-        fail:'삼일절은 1919년 3월 1일 전국적인 만세 운동을 기리는 날입니다. 오늘은 그날이 아닙니다.' },
-      { text:'제헌절', correct:false,
-        fail:'제헌절은 1948년 7월 17일 대한민국 헌법 제정을 기념하는 날입니다. 오늘은 그 이전입니다.' }
-    ]
-  },
+    s5: {
+      stageNum:5, type:'choice', scene: IMAGES.stage5,
+      title:'5. 정오의 방송',
+      narration:`지지직 — 잡음 사이로 낯선 억양의 목소리가 흘러나옵니다. 어려운 문어체 일본어인 데다 수신 상태마저 나빠 방 안의 누구도 쉽게 알아듣지 못합니다. 사람들은 서로의 얼굴만 바라봅니다. 시간이 멈춘 듯 몇 분이 지나갑니다.<br><br>
+      방송이 끝나고 무거운 정적이 흐릅니다.<br><br>
+      그때 — 바깥에서 누군가 외치는 소리가 담을 넘어 들려옵니다.<br>
+      <b>"전쟁이 끝났다! 일본이 항복했다!"</b><br><br>
+      송호의 어머니가 소리 없이 눈물을 흘립니다. 35년. 우리말로 마음껏 이름을 부르지 못했던 그 길고 긴 시간이, 지금 이 순간 끝나고 있습니다.<br><br>
+      거리 곳곳에서 함성이 터져 나옵니다. 오늘, 우리는 이 날을 무엇이라 부를까요?`,
+      prompt:'오늘, 이 날의 이름은 무엇일까요?',
+      choices:[
+        { text:'광복절', correct:true, next:'ending' },
+        { text:'삼일절', correct:false,
+          fail:'삼일절은 1919년 3월 1일 전국적인 만세 운동을 기리는 날입니다. 오늘은 그날이 아닙니다.' },
+        { text:'제헌절', correct:false,
+          fail:'제헌절은 1948년 7월 17일 대한민국 헌법 제정을 기념하는 날입니다. 오늘은 그 이전입니다.' }
+      ]
+    },
 
-  ending: {
-    type:'ending'
-  }
-};
+    ending: {
+      type:'ending'
+    }
+  };
+}
 
 let currentId = 'intro';
 
@@ -680,7 +833,27 @@ function progressDots(activeStageNum){
   return `<div class="progress">${dots}</div>`;
 }
 
+function sendToGoogleSheet() {
+  if (!GOOGLE_SHEETS_URL) return;
+  try {
+    fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        timestamp: userData.completedAt,
+        studentId: userData.studentId,
+        studentName: userData.studentName,
+        reflection: userData.reflection
+      })
+    });
+  } catch (e) {
+    console.log("시트 전송 실패:", e);
+  }
+}
+
 function render(){
+  const scenes = getScenes();
   const s = scenes[currentId];
 
   if(s.type === 'intro'){
@@ -690,10 +863,38 @@ function render(){
         <h1 class="title">${s.title}</h1>
         <div class="subtitle">${s.subtitle}</div>
         <div class="narration">${s.body}</div>
+        
+        <div class="input-box-group">
+          <div class="input-row">
+            <label class="input-label" for="studentId">학번 (예: 20315 또는 2학년 3반 15번)</label>
+            <input type="text" id="studentId" class="text-input" placeholder="학번을 입력하세요" value="${userData.studentId}">
+          </div>
+          <div class="input-row">
+            <label class="input-label" for="studentName">이름</label>
+            <input type="text" id="studentName" class="text-input" placeholder="이름을 입력하세요" value="${userData.studentName}">
+          </div>
+        </div>
+
         <button class="start-btn" id="startBtn">시간의 문을 연다</button>
       </div></div>
     `;
-    document.getElementById('startBtn').onclick = () => { Sound.ensure(); Sound.click(); go('s1'); };
+    
+    document.getElementById('startBtn').onclick = () => {
+      const idInput = document.getElementById('studentId').value.trim();
+      const nameInput = document.getElementById('studentName').value.trim();
+
+      if (!idInput || !nameInput) {
+        alert('학번과 이름을 모두 입력해주세요.');
+        return;
+      }
+
+      userData.studentId = idInput;
+      userData.studentName = nameInput;
+
+      Sound.ensure(); 
+      Sound.click(); 
+      go('s1'); 
+    };
     return;
   }
 
@@ -743,6 +944,7 @@ function render(){
   }
 
   if(s.type === 'ending'){
+    const name = userData.studentName || '동무';
     app.innerHTML = `
       <div class="card"><div class="card-inner">
         <div class="ending-glow"></div>
@@ -762,12 +964,13 @@ function render(){
         <h1 class="title">광복</h1>
         <div class="narration" style="text-align:left;">
           밖으로 나가니 거리는 이미 태극기 물결입니다. 대체 어디에 숨겨 두었던 걸까요. 사람들 손마다, 품속에서 꺼낸 태극기가 들려 있습니다. 처음 보는 사람들끼리 부둥켜안고 울고 웃으며 목이 터져라 만세를 외칩니다. 어제까지 고개를 숙이고 걷던 사람들이 오늘은 하늘을 향해 두 팔을 뻗고 있습니다.<br><br>
-          동만이 젖은 눈으로 나지막이 말합니다.<br>
-          <span class="speaker">동만</span> "이 날을 끝내 보지 못하고 떠난 분들이… 참 많아요. 감옥에서, 낯선 이국땅에서, 이름조차 남기지 못한 채로요."<br><br>
+          송호가 젖은 눈으로 나지막이 말합니다.<br>
+          <span class="speaker">송호</span> "이 날을 끝내 보지 못하고 떠난 분들이… 참 많아요. 감옥에서, 낯선 이국땅에서, 이름조차 남기지 못한 채로요. 고마웠어요, ${name} 님."<br><br>
           그렇습니다. 오늘 이 함성 뒤에는 이 아침을 맞지 못한 수많은 사람의 시간이 쌓여 있습니다. 오늘의 기쁨은 거저 온 것이 아닙니다.<br><br>
-          그 순간 눈앞이 다시 흐려지기 시작합니다. 시간의 균열이 당신을 부르고 있습니다. 멀어지는 함성 속에서 동만이 손을 흔듭니다.<br><br>
+          그 순간 눈앞이 다시 흐려지기 시작합니다. 시간의 균열이 당신을 부르고 있습니다. 멀어지는 함성 속에서 송호가 손을 흔듭니다.<br><br>
           정신을 차려보니 박물관 특별전시실 앞입니다. 유리창 너머로 평범한 오후의 거리가 흐르고 있습니다. 우리말로 이야기하고, 우리 이름으로 불리는 이 당연한 하루가 조금은 다르게 보입니다.
         </div>
+        
         <div class="recap">
           <b>오늘 확인한 역사적 사실들</b><br>
           · 1945년 8월 15일 정오, 일왕의 항복 선언 라디오 방송이 전해졌습니다.<br>
@@ -776,12 +979,99 @@ function render(){
           · 1919년 3월 1일 만세 운동 → <b>삼일절</b> / 1948년 7월 17일 헌법 공포 → <b>제헌절</b>과 구분해야 합니다.<br>
           · 광복은 수많은 사람의 희생과 헌신 위에 이루어진 값진 결실입니다.
         </div>
+
+        <div class="input-box-group" style="margin-top:24px;">
+          <div class="input-row">
+            <label class="input-label" for="userReflection">📜 '1945, 그 날' 게임을 마치며 느낀 소감을 적어주세요.</label>
+            <textarea id="userReflection" class="textarea-input" placeholder="광복절의 의미나 게임을 진행하며 느낀 점을 솔직하게 작성해보세요."></textarea>
+          </div>
+        </div>
+
         <div class="action-row">
-          <button class="action-btn" id="restartBtn">다시 시간 여행 떠나기</button>
+          <button class="action-btn" id="certBtn">📜 '그 날' 체험 인증서 발급받기</button>
         </div>
       </div></div>
     `;
-    document.getElementById('restartBtn').onclick = () => { Sound.click(); go('intro'); };
+
+    document.getElementById('certBtn').onclick = () => {
+      const reflectionText = document.getElementById('userReflection').value.trim();
+      if (!reflectionText) {
+        alert('체험 소감을 작성하시면 인증서가 발급됩니다.');
+        return;
+      }
+      
+      userData.reflection = reflectionText;
+      const now = new Date();
+      userData.completedAt = `${now.getFullYear()}년 ${now.getMonth()+1}월 ${now.getDate()}일 ${now.getHours()}시 ${now.getMinutes()}분`;
+      
+      // 구글 시트로 자동 데이터 전송
+      sendToGoogleSheet();
+
+      Sound.click();
+      go('certificate');
+    };
+    return;
+  }
+
+  if(s.type === 'certificate' || currentId === 'certificate'){
+    app.innerHTML = `
+      <div class="card"><div class="card-inner">
+        <div class="ending-glow"></div>
+        <div class="certificate-frame" id="certFrame">
+          <svg class="taegeuk" viewBox="0 0 100 100">
+            <defs>
+              <clipPath id="certCircleClip"><circle cx="50" cy="50" r="48"/></clipPath>
+            </defs>
+            <circle cx="50" cy="50" r="48" fill="#26437c"/>
+            <g clip-path="url(#certCircleClip)">
+              <path d="M50 2 A24 24 0 0 1 50 50 A24 24 0 0 0 50 98 A48 48 0 0 1 50 2 Z" fill="#c23b32"/>
+              <circle cx="50" cy="26" r="12" fill="#c23b32"/>
+              <circle cx="50" cy="74" r="12" fill="#26437c"/>
+            </g>
+            <circle cx="50" cy="50" r="48" fill="none" stroke="#2a231a" stroke-width="2"/>
+          </svg>
+          <div class="cert-header">'그 날'(=광복절) 체험 인증서</div>
+          <div class="cert-subtitle">CERTIFICATE OF HISTORICAL EXPERIENCE</div>
+
+          <div class="cert-details">
+            <div class="cert-item"><span class="cert-label">학 번:</span><span class="cert-val">${userData.studentId}</span></div>
+            <div class="cert-item"><span class="cert-label">성 명:</span><span class="cert-val">${userData.studentName}</span></div>
+            <div class="cert-item"><span class="cert-label">체험 과정:</span><span class="cert-val">1945년 8월 15일 광복절 시공간 탈출 역사 체험</span></div>
+            <div class="cert-item" style="flex-direction:column; gap:4px;">
+              <span class="cert-label">나의 소감:</span>
+              <div class="cert-reflection-box">"${userData.reflection}"</div>
+            </div>
+          </div>
+
+          <div class="cert-statement">
+            위 사람은 1945년 8월 15일 광복의 역사적 순간을 직접 체험하고,<br>
+            독립을 위해 헌신하신 분들의 숭고한 뜻과 광복절의 참의미를 깊이 새겼음을 인증합니다.
+          </div>
+
+          <div class="cert-footer">
+            <div class="cert-date">발급일: ${userData.completedAt}</div>
+            <div class="cert-seal">역사체험<br>인증인</div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="action-btn" id="printBtn">📸 인증서 화면 저장 / 캡처</button>
+          <button class="action-btn secondary" id="restartAllBtn">처음부터 다시 하기</button>
+        </div>
+      </div></div>
+    `;
+
+    document.getElementById('printBtn').onclick = () => {
+      window.print();
+    };
+
+    document.getElementById('restartAllBtn').onclick = () => {
+      userData.studentId = '';
+      userData.studentName = '';
+      userData.reflection = '';
+      Sound.click();
+      go('intro');
+    };
     return;
   }
 }
