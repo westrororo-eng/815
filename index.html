@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>1945, 그 날</title>
+<!-- html2canvas 라이브러리 추가 (인증서 이미지 파일 저장용) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
@@ -33,6 +35,9 @@
     font-family:'Noto Serif KR', serif;
     color:var(--ink);
     overflow-x:hidden;
+    /* 의미 단위(어절) 기준 줄바꿈 적용 */
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   #app{
@@ -99,6 +104,28 @@
     margin:0 0 4px;
     color:var(--ink);
     letter-spacing:0.02em;
+    word-break: keep-all;
+    text-wrap: balance;
+  }
+  h2.stage-title{
+    font-family:'Song Myung', serif;
+    text-align:center;
+    font-size:22px;
+    margin:0 0 18px;
+    color:var(--indigo);
+    word-break: keep-all;
+    text-wrap: balance;
+  }
+
+  .subtitle{
+    text-align:center;
+    font-family:'Noto Sans KR', sans-serif;
+    font-size:13px;
+    color:var(--ink);
+    opacity:0.7;
+    margin-bottom:22px;
+    word-break: keep-all;
+    text-wrap: balance;
   }
   h2.stage-title{
     font-family:'Song Myung', serif;
@@ -186,11 +213,49 @@
     color:var(--ink);
     margin: 0 0 26px;
     padding: 0 2px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   .narration .speaker{
     font-family:'Noto Sans KR', sans-serif;
     font-weight:700;
     color:var(--indigo);
+  }
+
+  .speaker-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 14px 0;
+  }
+  .speaker-line .speaker {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    color: var(--indigo);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .speaker-line .dialogue {
+    flex: 1;
+  }
+
+  .recap-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .recap-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .recap-item .bullet {
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .recap-item .recap-text {
+    flex: 1;
   }
 
   .prompt{
@@ -200,6 +265,8 @@
     color:var(--red);
     margin-bottom:12px;
     text-align:center;
+    word-break: keep-all;
+    text-wrap: balance;
   }
 
   .choices{ display:flex; flex-direction:column; gap:10px; }
@@ -215,6 +282,8 @@
     cursor:pointer;
     color:var(--ink);
     transition: all 0.15s ease;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   .choice-btn:hover{
     background: rgba(255,255,255,0.65);
@@ -276,6 +345,8 @@
     border-left: 3px solid var(--red-soft);
     padding: 14px 16px;
     margin: 4px 0 6px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   /* 엔딩 효과 & 인증서 스타일 */
@@ -291,102 +362,191 @@
     font-size:13px;
     line-height:1.9;
     background: rgba(0,0,0,0.035);
-    border-radius:4px;
-    padding: 14px 18px;
-    margin-top: 18px;
+    padding:16px;
+    border-radius:6px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
-  .recap b{ color:var(--indigo); }
 
-  /* 고풍스러운 체험 인증서 양식 */
+  /* 고풍스러운 전통 상장 형태의 인증서 스타일 */
   .certificate-frame {
-    border: 6px double var(--gold);
-    background: #fcf8ee;
-    padding: 28px 22px;
+    border: 3px solid var(--gold);
+    outline: 8px double var(--gold);
+    outline-offset: -12px;
+    background: #faf6ed;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(224, 178, 63, 0.08), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.01) 0 2px, transparent 2px 4px);
+    padding: 44px 36px 36px;
     border-radius: 4px;
     position: relative;
-    box-shadow: inset 0 0 20px rgba(184,144,31,0.15);
-    margin-top: 10px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2), inset 0 0 30px rgba(184,144,31,0.1);
+    margin: 12px 0;
     text-align: center;
   }
+
+  /* 귀퉁이 전통 문양 */
+  .cert-corner {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+  .cert-corner.top-left { top: 16px; left: 16px; }
+  .cert-corner.top-right { top: 16px; right: 16px; transform: rotate(90deg); }
+  .cert-corner.bottom-left { bottom: 16px; left: 16px; transform: rotate(-90deg); }
+  .cert-corner.bottom-right { bottom: 16px; right: 16px; transform: rotate(180deg); }
+
+  .cert-serial {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: left;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
+
   .cert-header {
     font-family: 'Song Myung', serif;
-    font-size: 26px;
+    font-size: 36px;
     font-weight: 700;
     color: var(--indigo);
-    margin-bottom: 6px;
-    letter-spacing: 0.1em;
+    margin: 10px 0 2px;
+    letter-spacing: 0.35em;
+    text-indent: 0.35em;
+    text-shadow: 1px 1px 0px rgba(184,144,31,0.25);
   }
+  
   .cert-subtitle {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--gold);
-    letter-spacing: 0.2em;
-    margin-bottom: 24px;
+    letter-spacing: 0.32em;
+    margin-bottom: 28px;
     font-weight: 700;
   }
-  .cert-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  .cert-recipient-grid {
+    display: table;
+    margin: 0 auto 24px;
     text-align: left;
     font-family: 'Noto Serif KR', serif;
+    font-size: 15.5px;
+    border-bottom: 1px dashed var(--paper-shadow);
+    padding-bottom: 16px;
+    width: 90%;
+  }
+  .cert-recipient-row { display: table-row; }
+  .cert-recipient-label {
+    display: table-cell;
+    padding: 4px 16px 4px 0;
+    font-weight: 700;
+    color: var(--indigo);
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 24px;
-    padding: 16px;
-    background: rgba(255,255,255,0.7);
-    border: 1px solid var(--paper-shadow);
-    border-radius: 4px;
+    width: 80px;
+    white-space: nowrap;
   }
-  .cert-item { display: flex; }
-  .cert-label { font-weight: 700; color: var(--indigo); width: 85px; flex-shrink: 0; }
-  .cert-val { color: var(--ink); flex-grow: 1; word-break: break-all; }
-  .cert-reflection-box {
-    background: #f3edd9;
-    border-left: 3px solid var(--gold);
-    padding: 10px 14px;
-    font-style: italic;
-    margin-top: 4px;
-    font-size: 13.5px;
-    line-height: 1.6;
+  .cert-recipient-val {
+    display: table-cell;
+    padding: 4px 0;
+    color: var(--ink);
+    font-weight: 600;
   }
+
   .cert-statement {
     font-family: 'Song Myung', serif;
-    font-size: 15px;
-    line-height: 1.8;
+    font-size: 16.5px;
+    line-height: 2.0;
     color: var(--ink);
-    margin: 20px 0 24px;
+    margin: 20px 12px 24px;
     word-break: keep-all;
+    text-align: justify;
+    text-justify: interpunct;
   }
-  .cert-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-top: 10px;
-    padding-top: 12px;
-    border-top: 1px solid var(--paper-shadow);
+
+  .cert-reflection-wrapper {
+    background: #f3ece0;
+    border: 1px solid var(--paper-shadow);
+    border-left: 5px solid var(--gold);
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 20px 10px 28px;
+    text-align: left;
+    position: relative;
   }
-  .cert-date {
+  .cert-reflection-title {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 12px;
-    color: var(--ink-soft);
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
-  .cert-seal {
-    width: 64px;
-    height: 64px;
-    border: 2px solid var(--red);
-    border-radius: 50%;
+  .cert-reflection-box {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .cert-footer-group {
+    margin-top: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .cert-date {
+    font-family: 'Song Myung', serif;
+    font-size: 16px;
+    color: var(--ink-soft);
+    letter-spacing: 0.15em;
+  }
+  .cert-issuer-container {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+  }
+  .cert-issuer {
+    font-family: 'Song Myung', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--indigo);
+    letter-spacing: 0.2em;
+    position: relative;
+    z-index: 1;
+  }
+  .cert-official-seal {
+    position: absolute;
+    right: -18px;
+    top: -12px;
+    width: 76px;
+    height: 76px;
+    border: 3px solid var(--red);
+    border-radius: 4px;
     color: var(--red);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Song Myung', serif;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
-    transform: rotate(-12deg);
-    opacity: 0.85;
+    line-height: 1.15;
+    transform: rotate(-6deg);
+    opacity: 0.88;
     user-select: none;
-    box-shadow: inset 0 0 4px rgba(164,41,31,0.2);
+    box-shadow: inset 0 0 4px rgba(164,41,31,0.3);
+    background: rgba(164,41,31,0.02);
+    z-index: 2;
   }
 
   .rift{
@@ -453,7 +613,7 @@ const userData = {
 
 const Sound = {
   ctx:null, master:null, enabled:true,
-  drone:null, statics:null, tick:null, _nb:null,
+  drone:null, statics:null, tick:null, wind:null, heartbeat:null, _nb:null,
   ensure(){
     if(!this.ctx){
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -478,21 +638,80 @@ const Sound = {
     for(let i=0;i<len;i++) d[i] = Math.random()*2-1;
     this._nb = buf; return buf;
   },
-  startDrone(){
-    if(!this.ctx || this.drone) return;
-    const g = this.ctx.createGain(); g.gain.value = 0.05;
+  startDrone(vol = 0.08){
+    if(!this.ctx) return;
+    if(this.drone){
+      this.drone.g.gain.linearRampToValueAtTime(vol, this.ctx.currentTime + 0.3);
+      return;
+    }
+    const g = this.ctx.createGain(); g.gain.value = vol;
     const o1 = this.ctx.createOscillator(); o1.type='sine'; o1.frequency.value = 55;
     const o2 = this.ctx.createOscillator(); o2.type='sine'; o2.frequency.value = 55.8;
+    const o3 = this.ctx.createOscillator(); o3.type='triangle'; o3.frequency.value = 110;
+    const g3 = this.ctx.createGain(); g3.gain.value = 0.15;
+    o3.connect(g3); g3.connect(g);
     o1.connect(g); o2.connect(g); g.connect(this.master);
-    o1.start(); o2.start();
-    this.drone = {g,o1,o2};
+    o1.start(); o2.start(); o3.start();
+    this.drone = {g,o1,o2,o3};
   },
   stopDrone(){
     if(!this.ctx || !this.drone) return;
-    const {g,o1,o2} = this.drone;
+    const {g,o1,o2,o3} = this.drone;
     g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
-    setTimeout(()=>{ try{o1.stop();o2.stop();}catch(e){} }, 700);
+    setTimeout(()=>{ try{o1.stop();o2.stop();if(o3)o3.stop();}catch(e){} }, 700);
     this.drone = null;
+  },
+  startWind(level = 0.04){
+    if(!this.ctx) return;
+    if(this.wind){
+      this.wind.g.gain.linearRampToValueAtTime(level, this.ctx.currentTime + 0.3);
+      return;
+    }
+    const src = this.ctx.createBufferSource(); src.buffer = this.noiseBuffer(); src.loop = true;
+    const lp = this.ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 320;
+    const g = this.ctx.createGain(); g.gain.value = 0;
+    
+    // 바람의 주기적 일렁임(LFO)
+    const lfo = this.ctx.createOscillator(); lfo.frequency.value = 0.22;
+    const lg = this.ctx.createGain(); lg.gain.value = 180;
+    lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+
+    src.connect(lp); lp.connect(g); g.connect(this.master);
+    src.start();
+    g.gain.linearRampToValueAtTime(level, this.ctx.currentTime + 0.8);
+    this.wind = {src, g, lfo};
+  },
+  stopWind(){
+    if(!this.ctx || !this.wind) return;
+    const w = this.wind;
+    w.g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+    setTimeout(()=>{ try{ w.src.stop(); w.lfo.stop(); }catch(e){} }, 600);
+    this.wind = null;
+  },
+  startHeartbeat(){
+    if(!this.ctx || this.heartbeat) return;
+    const playBeat = () => {
+      if(!this.ctx || !this.heartbeat) return;
+      const t = this.ctx.currentTime;
+      // 쿵 (Beat 1)
+      const o1 = this.ctx.createOscillator(); const g1 = this.ctx.createGain();
+      o1.type = 'sine'; o1.frequency.setValueAtTime(85, t);
+      o1.frequency.exponentialRampToValueAtTime(28, t + 0.12);
+      g1.gain.setValueAtTime(0.35, t); g1.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+      o1.connect(g1); g1.connect(this.master); o1.start(t); o1.stop(t + 0.16);
+
+      // 쾅 (Beat 2)
+      const o2 = this.ctx.createOscillator(); const g2 = this.ctx.createGain();
+      o2.type = 'sine'; o2.frequency.setValueAtTime(65, t + 0.18);
+      o2.frequency.exponentialRampToValueAtTime(22, t + 0.3);
+      g2.gain.setValueAtTime(0.25, t + 0.18); g2.gain.exponentialRampToValueAtTime(0.001, t + 0.32);
+      o2.connect(g2); g2.connect(this.master); o2.start(t + 0.18); o2.stop(t + 0.35);
+    };
+    playBeat();
+    this.heartbeat = setInterval(playBeat, 1050);
+  },
+  stopHeartbeat(){
+    if(this.heartbeat){ clearInterval(this.heartbeat); this.heartbeat = null; }
   },
   startStatic(level){
     if(!this.ctx) return;
@@ -565,12 +784,54 @@ const Sound = {
   scene(id){
     if(!this.ctx) return;
     this.stopTick();
-    if(id === 'intro'){ this.stopDrone(); this.stopStatic(); }
-    else if(id === 's1' || id === 's2' || id === 's3'){ this.startDrone(); this.stopStatic(); }
-    else if(id === 's4'){ this.startDrone(); this.startStatic(0.03); }
-    else if(id === 's4b'){ this.startDrone(); this.startStatic(0.045); this.startTick(); }
-    else if(id === 's5'){ this.startDrone(); this.startStatic(0.06); }
-    else if(id === 'ending' || id === 'certificate'){ this.stopDrone(); this.stopStatic(); this.liberation(); }
+    this.stopHeartbeat();
+    if(id === 'intro'){ 
+      this.stopDrone(); this.stopStatic(); this.stopWind(); 
+    }
+    else if(id === 's1'){ 
+      // STAGE 1: 낯선 골목 - 스산한 골목 바람 소리 + 묵직한 베이스 드론
+      this.startDrone(0.08); 
+      this.startWind(0.05); 
+      this.stopStatic(); 
+    }
+    else if(id === 's2'){ 
+      // STAGE 2: 벽보와 청년 - 은밀한 긴장감, 바람 소리와 잔잔한 노이즈
+      this.startDrone(0.09); 
+      this.startWind(0.03); 
+      this.startStatic(0.015); 
+    }
+    else if(id === 's3'){ 
+      // STAGE 3: 검문 - 순사 검문, 긴장감 넘치는 쿵쾅거리는 심장 소리(Heartbeat)
+      this.startDrone(0.12); 
+      this.stopWind(); 
+      this.startStatic(0.02); 
+      this.startHeartbeat(); 
+    }
+    else if(id === 's4'){ 
+      // STAGE 4: 다락방 라디오
+      this.startDrone(0.09); 
+      this.stopWind(); 
+      this.startStatic(0.035); 
+    }
+    else if(id === 's4b'){ 
+      // STAGE 4b: 정오 5분 전 - 시계 초침 + 라디오 잡음
+      this.startDrone(0.1); 
+      this.stopWind(); 
+      this.startStatic(0.05); 
+      this.startTick(); 
+    }
+    else if(id === 's5'){ 
+      // STAGE 5: 정오 방송
+      this.startDrone(0.12); 
+      this.stopWind(); 
+      this.startStatic(0.07); 
+    }
+    else if(id === 'ending' || id === 'certificate'){ 
+      this.stopDrone(); 
+      this.stopStatic(); 
+      this.stopWind(); 
+      this.liberation(); 
+    }
   }
 };
 
@@ -728,14 +989,14 @@ function getScenes() {
     s2: {
       stageNum:2, type:'choice', scene: IMAGES.stage2,
       title:'2. 벽보와 청년',
-      narration:`골목 담벼락에 붙은 전단 조각에서 <b>"연합군, 총공세"</b>, <b>"신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.<br><br>
-      <span class="speaker">청년(송호)</span> "거긴 위험해요… 그런데 낯선 분이시네요. 저는 송호라고 합니다. 지금이 몇 년도인지는 아세요?"`,
+      narration:`골목 담벼락에 붙은 전단 조각에서 <b>"연합군, 총공세"</b>, <b>"신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.
+      <div class="speaker-line"><span class="speaker">청년(송호)</span><span class="dialogue">"거긴 위험해요… 그런데 낯선 분이시네요. 저는 송호라고 합니다. 지금이 몇 년도인지는 아세요?"</span></div>`,
       prompt:'송호의 신뢰를 얻으려면 몇 년도라고 대답해야 할까요?',
       choices:[
         { text:'"1919년, 3·1 운동이 일어난 해 아닌가요?"', correct:false,
           fail:'전단에 적힌 "신형 폭탄"이라는 표현은 1945년 8월 히로시마와 나가사키에 투하된 원자폭탄을 가리킵니다. 1919년의 상황과는 맞지 않습니다.' },
-        { text:'"1945년, 일제의 패망이 임박한 시점 같아요."', correct:true, next:'s3',
-          after:`<span class="speaker">송호</span> "맞아요, ${name} 님… 곧 무슨 일이 벌어질 것 같은데 다들 쉬쉬하고 있어요. 순사 눈에 띄면 큰일 나니 조심하세요."` },
+        { text:'"1945년 아닌가요?"', correct:true, next:'s3',
+          after:`<div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"맞아요, ${name} 님… 곧 무슨 일이 벌어질 것 같은데 다들 쉬쉬하고 있어요. 순사 눈에 띄면 큰일 나니 조심하세요."</span></div>` },
         { text:'"1937년, 중일 전쟁이 시작된 해 같아요."', correct:false,
           fail:'중일 전쟁은 1937년에 시작되었지만, 전단 속 "연합군 총공세"와 "신형 폭탄"이라는 표현은 전쟁이 막바지에 이른 1945년의 상황을 나타냅니다.' }
       ]
@@ -744,8 +1005,8 @@ function getScenes() {
     s3: {
       stageNum:3, type:'choice', scene: IMAGES.stage3,
       title:'3. 검문',
-      narration:`골목을 벗어나려는데 순사가 앞을 가로막습니다.<br><br>
-      <span class="speaker">순사</span> "거기, 신분증 좀 봅시다."<br>
+      narration:`골목을 벗어나려는데 순사가 앞을 가로막습니다.
+      <div class="speaker-line"><span class="speaker">순사</span><span class="dialogue">"거기, 신분증 좀 봅시다."</span></div>
       등줄기에 식은땀이 흐릅니다.`,
       prompt:'어떻게 대응해야 무사히 넘어갈 수 있을까요?',
       choices:[
@@ -761,8 +1022,8 @@ function getScenes() {
     s4: {
       stageNum:4, type:'choice', scene: IMAGES.stage4,
       title:'4. 다락방의 라디오',
-      narration:`송호의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.<br><br>
-      <span class="speaker">송호</span> "${name} 님, 오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 사실이라면 우리는 어떻게 해야 할까요?"`,
+      narration:`송호의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.
+      <div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"${name} 님, 오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 사실이라면 우리는 어떻게 해야 할까요?"</span></div>`,
       prompt:'정오까지 당신은 어떻게 행동해야 할까요?',
       choices:[
         { text:'동네방네 "곧 우리가 해방된다!"며 소문을 낸다.', correct:false,
@@ -806,6 +1067,9 @@ function getScenes() {
 
     ending: {
       type:'ending'
+    },
+    certificate: {
+      type:'certificate'
     }
   };
 }
@@ -875,6 +1139,7 @@ function render(){
           </div>
         </div>
 
+        <div id="introAlert" class="prompt" style="display:none; margin-top:10px;">학번과 이름을 모두 입력해 주세요.</div>
         <button class="start-btn" id="startBtn">시간의 문을 연다</button>
       </div></div>
     `;
@@ -884,7 +1149,7 @@ function render(){
       const nameInput = document.getElementById('studentName').value.trim();
 
       if (!idInput || !nameInput) {
-        alert('학번과 이름을 모두 입력해주세요.');
+        document.getElementById('introAlert').style.display = 'block';
         return;
       }
 
@@ -964,28 +1229,32 @@ function render(){
         <h1 class="title">광복</h1>
         <div class="narration" style="text-align:left;">
           밖으로 나가니 거리는 이미 태극기 물결입니다. 대체 어디에 숨겨 두었던 걸까요. 사람들 손마다, 품속에서 꺼낸 태극기가 들려 있습니다. 처음 보는 사람들끼리 부둥켜안고 울고 웃으며 목이 터져라 만세를 외칩니다. 어제까지 고개를 숙이고 걷던 사람들이 오늘은 하늘을 향해 두 팔을 뻗고 있습니다.<br><br>
-          송호가 젖은 눈으로 나지막이 말합니다.<br>
-          <span class="speaker">송호</span> "이 날을 끝내 보지 못하고 떠난 분들이… 참 많아요. 감옥에서, 낯선 이국땅에서, 이름조차 남기지 못한 채로요. 고마웠어요, ${name} 님."<br><br>
+          송호가 젖은 눈으로 나지막이 말합니다.
+          <div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"이 날을 끝내 보지 못하고 떠난 분들이… 참 많아요. 감옥에서, 낯선 이국땅에서, 이름조차 남기지 못한 채로요. 고마웠어요, ${name} 님."</span></div>
           그렇습니다. 오늘 이 함성 뒤에는 이 아침을 맞지 못한 수많은 사람의 시간이 쌓여 있습니다. 오늘의 기쁨은 거저 온 것이 아닙니다.<br><br>
           그 순간 눈앞이 다시 흐려지기 시작합니다. 시간의 균열이 당신을 부르고 있습니다. 멀어지는 함성 속에서 송호가 손을 흔듭니다.<br><br>
           정신을 차려보니 박물관 특별전시실 앞입니다. 유리창 너머로 평범한 오후의 거리가 흐르고 있습니다. 우리말로 이야기하고, 우리 이름으로 불리는 이 당연한 하루가 조금은 다르게 보입니다.
         </div>
         
         <div class="recap">
-          <b>오늘 확인한 역사적 사실들</b><br>
-          · 1945년 8월 15일 정오, 일왕의 항복 선언 라디오 방송이 전해졌습니다.<br>
-          · 방송은 잡음이 심하고 어려운 문어체 일본어였기 때문에 당시 사람들도 곧바로 알아듣기 어려웠습니다.<br>
-          · 이 날을 기념하여 8월 15일을 <b>광복절</b>이라 부릅니다. '광복(光復)'은 '빛을 되찾다', 즉 빼앗긴 국권을 되찾음을 뜻합니다.<br>
-          · 1919년 3월 1일 만세 운동 → <b>삼일절</b> / 1948년 7월 17일 헌법 공포 → <b>제헌절</b>과 구분해야 합니다.<br>
-          · 광복은 수많은 사람의 희생과 헌신 위에 이루어진 값진 결실입니다.
+          <b style="display:block; margin-bottom:8px;">오늘 확인한 역사적 사실들</b>
+          <div class="recap-list">
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">1945년 8월 15일 정오, 일왕의 항복 선언 라디오 방송이 전해졌습니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">방송은 잡음이 심하고 어려운 문어체 일본어였기 때문에 당시 사람들도 곧바로 알아듣기 어려웠습니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">이 날을 기념하여 8월 15일을 <b>광복절</b>이라 부릅니다. '광복(光復)'은 '빛을 되찾다', 즉 빼앗긴 국권을 되찾음을 뜻합니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">1919년 3월 1일 만세 운동 → <b>삼일절</b> / 1948년 7월 17일 헌법 공포 → <b>제헌절</b>과 구분해야 합니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">광복은 수많은 사람의 희생과 헌신 위에 이루어진 값진 결실입니다.</span></div>
+          </div>
         </div>
 
         <div class="input-box-group" style="margin-top:24px;">
           <div class="input-row">
-            <label class="input-label" for="userReflection">📜 '1945, 그 날' 게임을 마치며 느낀 소감을 적어주세요.</label>
-            <textarea id="userReflection" class="textarea-input" placeholder="광복절의 의미나 게임을 진행하며 느낀 점을 솔직하게 작성해보세요."></textarea>
+            <label class="input-label" for="userReflection">📜 '1945, 그 날' 체험을 마치며 느낀 소감을 적어주세요.</label>
+            <textarea id="userReflection" class="textarea-input" placeholder="광복절의 의미나 체험을 진행하며 느낀 점을 솔직하게 작성해보세요."></textarea>
           </div>
         </div>
+
+        <div id="certAlert" class="prompt" style="display:none; margin-top:10px;">체험 소감을 작성해 주시면 인증서가 발급됩니다.</div>
 
         <div class="action-row">
           <button class="action-btn" id="certBtn">📜 '그 날' 체험 인증서 발급받기</button>
@@ -996,7 +1265,7 @@ function render(){
     document.getElementById('certBtn').onclick = () => {
       const reflectionText = document.getElementById('userReflection').value.trim();
       if (!reflectionText) {
-        alert('체험 소감을 작성하시면 인증서가 발급됩니다.');
+        document.getElementById('certAlert').style.display = 'block';
         return;
       }
       
@@ -1014,11 +1283,24 @@ function render(){
   }
 
   if(s.type === 'certificate' || currentId === 'certificate'){
+    // 랜덤 발급 번호 생성 (예: 제 1945-0815-4821 호)
+    const certNo = `제 1945-0815-${Math.floor(1000 + Math.random() * 9000)} 호`;
+
     app.innerHTML = `
       <div class="card"><div class="card-inner">
         <div class="ending-glow"></div>
+        
+        <!-- 고품격 상장 형태의 인증서 구역 -->
         <div class="certificate-frame" id="certFrame">
-          <svg class="taegeuk" viewBox="0 0 100 100">
+          <!-- 모서리 전통 문양 SVG -->
+          <svg class="cert-corner top-left" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
+          <svg class="cert-corner top-right" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
+          <svg class="cert-corner bottom-left" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
+          <svg class="cert-corner bottom-right" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
+
+          <div class="cert-serial">${certNo}</div>
+
+          <svg class="taegeuk" viewBox="0 0 100 100" style="width:52px; height:52px; margin-bottom:6px;">
             <defs>
               <clipPath id="certCircleClip"><circle cx="50" cy="50" r="48"/></clipPath>
             </defs>
@@ -1028,40 +1310,83 @@ function render(){
               <circle cx="50" cy="26" r="12" fill="#c23b32"/>
               <circle cx="50" cy="74" r="12" fill="#26437c"/>
             </g>
-            <circle cx="50" cy="50" r="48" fill="none" stroke="#2a231a" stroke-width="2"/>
+            <circle cx="50" cy="50" r="48" fill="none" stroke="#b8901f" stroke-width="3"/>
           </svg>
-          <div class="cert-header">'그 날'(=광복절) 체험 인증서</div>
+          
+          <div class="cert-header">역사 체험 인증서</div>
           <div class="cert-subtitle">CERTIFICATE OF HISTORICAL EXPERIENCE</div>
 
-          <div class="cert-details">
-            <div class="cert-item"><span class="cert-label">학 번:</span><span class="cert-val">${userData.studentId}</span></div>
-            <div class="cert-item"><span class="cert-label">성 명:</span><span class="cert-val">${userData.studentName}</span></div>
-            <div class="cert-item"><span class="cert-label">체험 과정:</span><span class="cert-val">1945년 8월 15일 광복절 시공간 탈출 역사 체험</span></div>
-            <div class="cert-item" style="flex-direction:column; gap:4px;">
-              <span class="cert-label">나의 소감:</span>
-              <div class="cert-reflection-box">"${userData.reflection}"</div>
+          <div class="cert-recipient-grid">
+            <div class="cert-recipient-row">
+              <span class="cert-recipient-label">성 명 :</span>
+              <span class="cert-recipient-val">${userData.studentName}</span>
+            </div>
+            <div class="cert-recipient-row">
+              <span class="cert-recipient-label">학 번 :</span>
+              <span class="cert-recipient-val">${userData.studentId}</span>
+            </div>
+            <div class="cert-recipient-row">
+              <span class="cert-recipient-label">체 험 주 제 :</span>
+              <span class="cert-recipient-val">1945년 8월 15일 광복절 역사 체험</span>
             </div>
           </div>
 
           <div class="cert-statement">
-            위 사람은 1945년 8월 15일 광복의 역사적 순간을 직접 체험하고,<br>
-            독립을 위해 헌신하신 분들의 숭고한 뜻과 광복절의 참의미를 깊이 새겼음을 인증합니다.
+            위 사람은 1945년 8월 15일, 암울했던 일제강점기 마지막 날의 시공간 균열 속에서 광복의 현장을 직접 목도하고 무사히 생환하였습니다. 독립을 위해 헌신하신 숭고한 희생을 기리고 광복절의 참된 의미를 가슴 깊이 새겼으므로 이 인증서를 수여합니다.
           </div>
 
-          <div class="cert-footer">
-            <div class="cert-date">발급일: ${userData.completedAt}</div>
-            <div class="cert-seal">역사체험<br>인증인</div>
+          <div class="cert-reflection-wrapper">
+            <div class="cert-reflection-title">📜 체험자의 다짐과 소감</div>
+            <div class="cert-reflection-box">“${userData.reflection}”</div>
+          </div>
+
+          <div class="cert-footer-group">
+            <div class="cert-date">${userData.completedAt}</div>
+            <div class="cert-issuer-container">
+              <span class="cert-issuer">송호고등학교 인문사회부</span>
+              <div class="cert-official-seal">역사<br>체험인</div>
+            </div>
           </div>
         </div>
 
         <div class="action-row">
-          <button class="action-btn" id="printBtn">📸 인증서 화면 저장 / 캡처</button>
+          <button class="action-btn" id="downloadImgBtn">📸 인증서 이미지 저장 (.png)</button>
+          <button class="action-btn secondary" id="printBtn">🖨️ 인쇄 / PDF 저장</button>
           <button class="action-btn secondary" id="restartAllBtn">처음부터 다시 하기</button>
         </div>
       </div></div>
     `;
 
+    // 이미지 저장 기능 (GitHub Pages 고해상도 대응 보완)
+    document.getElementById('downloadImgBtn').onclick = () => {
+      Sound.click();
+      const certEl = document.getElementById('certFrame');
+      if (window.html2canvas && certEl) {
+        // 구글 웹폰트 로딩이 완전히 완료된 후 캡처 실행 (글자 깨짐 방지)
+        document.fonts.ready.then(() => {
+          html2canvas(certEl, {
+            scale: 3, // 3배율 고해상도 렌더링 (선명도 대폭 향상)
+            backgroundColor: '#faf6ed',
+            useCORS: true, // GitHub Pages 배포 시 외부 폰트/이미지 보안 차단 방지
+            allowTaint: true,
+            logging: false
+          }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `1945_광복절_체험인증서_${userData.studentName || '인증서'}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+          }).catch(err => {
+            console.error('이미지 생성 오류:', err);
+            window.print();
+          });
+        });
+      } else {
+        window.print();
+      }
+    };
+
     document.getElementById('printBtn').onclick = () => {
+      Sound.click();
       window.print();
     };
 
