@@ -388,15 +388,16 @@
   /* 귀퉁이 전통 문양 */
   .cert-corner {
     position: absolute;
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
     color: var(--gold);
     opacity: 0.85;
+    pointer-events: none;
   }
-  .cert-corner.top-left { top: 16px; left: 16px; }
-  .cert-corner.top-right { top: 16px; right: 16px; transform: rotate(90deg); }
-  .cert-corner.bottom-left { bottom: 16px; left: 16px; transform: rotate(-90deg); }
-  .cert-corner.bottom-right { bottom: 16px; right: 16px; transform: rotate(180deg); }
+  .cert-corner.top-left { top: 14px; left: 14px; }
+  .cert-corner.top-right { top: 14px; right: 14px; transform: rotate(90deg); }
+  .cert-corner.bottom-left { bottom: 14px; left: 14px; transform: rotate(-90deg); }
+  .cert-corner.bottom-right { bottom: 14px; right: 14px; transform: rotate(180deg); }
 
   .cert-serial {
     font-family: 'Noto Serif KR', serif;
@@ -404,6 +405,7 @@
     color: var(--ink-soft);
     text-align: left;
     margin-bottom: 12px;
+    padding-left: 18px;
     letter-spacing: 0.05em;
     font-weight: 600;
   }
@@ -513,8 +515,11 @@
   }
   .cert-issuer-container {
     position: relative;
-    display: inline-block;
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 6px 16px;
   }
   .cert-issuer {
     font-family: 'Song Myung', serif;
@@ -526,11 +531,9 @@
     z-index: 1;
   }
   .cert-official-seal {
-    position: absolute;
-    right: -18px;
-    top: -12px;
-    width: 76px;
-    height: 76px;
+    position: relative;
+    width: 60px;
+    height: 60px;
     border: 3px solid var(--red);
     border-radius: 4px;
     color: var(--red);
@@ -538,7 +541,7 @@
     align-items: center;
     justify-content: center;
     font-family: 'Song Myung', serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1.15;
     transform: rotate(-6deg);
@@ -546,7 +549,7 @@
     user-select: none;
     box-shadow: inset 0 0 4px rgba(164,41,31,0.3);
     background: rgba(164,41,31,0.02);
-    z-index: 2;
+    flex-shrink: 0;
   }
 
   .rift{
@@ -1293,10 +1296,10 @@ function render(){
         <!-- 고품격 상장 형태의 인증서 구역 -->
         <div class="certificate-frame" id="certFrame">
           <!-- 모서리 전통 문양 SVG -->
-          <svg class="cert-corner top-left" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
-          <svg class="cert-corner top-right" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
-          <svg class="cert-corner bottom-left" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
-          <svg class="cert-corner bottom-right" viewBox="0 0 40 40"><path d="M0,0 L16,0 A24,24 0 0,1 40,24 L40,40 L32,40 L32,26 A18,18 0 0,0 14,8 L0,8 Z" fill="currentColor"/></svg>
+          <svg class="cert-corner top-left" viewBox="0 0 50 50"><path d="M 4,4 L 46,4 L 46,8 L 8,8 L 8,46 L 4,46 Z" fill="currentColor"/><path d="M 12,12 L 36,12 L 36,15 L 15,15 L 15,36 L 12,36 Z" fill="currentColor" opacity="0.7"/><rect x="18" y="18" width="5" height="5" fill="currentColor" opacity="0.85"/></svg>
+          <svg class="cert-corner top-right" viewBox="0 0 50 50"><path d="M 4,4 L 46,4 L 46,8 L 8,8 L 8,46 L 4,46 Z" fill="currentColor"/><path d="M 12,12 L 36,12 L 36,15 L 15,15 L 15,36 L 12,36 Z" fill="currentColor" opacity="0.7"/><rect x="18" y="18" width="5" height="5" fill="currentColor" opacity="0.85"/></svg>
+          <svg class="cert-corner bottom-left" viewBox="0 0 50 50"><path d="M 4,4 L 46,4 L 46,8 L 8,8 L 8,46 L 4,46 Z" fill="currentColor"/><path d="M 12,12 L 36,12 L 36,15 L 15,15 L 15,36 L 12,36 Z" fill="currentColor" opacity="0.7"/><rect x="18" y="18" width="5" height="5" fill="currentColor" opacity="0.85"/></svg>
+          <svg class="cert-corner bottom-right" viewBox="0 0 50 50"><path d="M 4,4 L 46,4 L 46,8 L 8,8 L 8,46 L 4,46 Z" fill="currentColor"/><path d="M 12,12 L 36,12 L 36,15 L 15,15 L 15,36 L 12,36 Z" fill="currentColor" opacity="0.7"/><rect x="18" y="18" width="5" height="5" fill="currentColor" opacity="0.85"/></svg>
 
           <div class="cert-serial">${certNo}</div>
 
