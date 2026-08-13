@@ -1007,7 +1007,7 @@ function getScenes() {
     s2: {
       stageNum:2, type:'choice', scene: IMAGES.stage2,
       title:'2. 벽보와 청년',
-      narration:`골목 담벼락에 붙은 전단 조각에서 <b>"연합군, 총공세"</b>, <b>"신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.
+      narration:`골목 담벼락에 붙은 벽보 조각에서 <b>"연합군, 총공세"</b>, <b>"히로시마, 나가사키 신형 폭탄"</b> 같은 문구가 어렴풋이 보입니다. 그때 한 청년이 조심스레 다가와 속삭입니다.
       <div class="speaker-line"><span class="speaker">청년(송호)</span><span class="dialogue">"거긴 위험해요… 그런데 낯선 분이시네요. 저는 송호라고 합니다. 지금이 몇 년도인지는 아세요?"</span></div>`,
       prompt:'송호의 신뢰를 얻으려면 몇 년도라고 대답해야 할까요?',
       choices:[
@@ -1024,14 +1024,14 @@ function getScenes() {
       stageNum:3, type:'choice', scene: IMAGES.stage3,
       title:'3. 검문',
       narration:`골목을 벗어나려는데 순사가 앞을 가로막습니다.
-      <div class="speaker-line"><span class="speaker">순사</span><span class="dialogue">"거기, 신분증 좀 봅시다."</span></div>
+      <div class="speaker-line"><span class="speaker">순사</span><span class="dialogue">"이봐, 어느 애국반 소속이지? 애국반 반장이 누구인가?"</span></div>
       등줄기에 식은땀이 흐릅니다.`,
       prompt:'어떻게 대응해야 무사히 넘어갈 수 있을까요?',
       choices:[
         { text:'"나는 미래에서 왔다"며 당당하게 저항한다.', correct:false,
           fail:'황당한 말은 의심만 자초할 뿐입니다. 이 시기에는 사소한 꼬투리 하나로도 끌려가 고초를 겪는 사람이 많았습니다. 침착하게 대처해야 합니다.' },
-        { text:'송호가 급히 건네준 낡은 신분증을 내밀며 침착하게 대답한다.', correct:true, next:'s4',
-          after:`순사는 신분증을 힐끗 보더니 별말 없이 지나쳐 갑니다. 송호가 옆에서 조용히 숨을 내쉬며 ${name} 님을 안심시킵니다.` },
+        { text:'수원군 반월면 2리 1반입니다. 반장은 김안산 어르신입니다.', correct:true, next:'s4',
+          after:`순사는 ${name} 의 얼굴을 힐끗 보더니 별말 없이 지나쳐 갑니다. 송호가 옆에서 조용히 숨을 내쉬며 ${name} 님을 안심시킵니다.` },
         { text:'뒤돌아 냅다 달아난다.', correct:false,
           fail:'도망치는 행동은 오히려 의심을 키웁니다. 등 뒤에서 호루라기 소리가 요란하게 울리기 시작합니다.' }
       ]
@@ -1040,8 +1040,8 @@ function getScenes() {
     s4: {
       stageNum:4, type:'choice', scene: IMAGES.stage4,
       title:'4. 다락방의 라디오',
-      narration:`송호의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.
-      <div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"${name} 님, 오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 사실이라면 우리는 어떻게 해야 할까요?"</span></div>`,
+      narration:`마을에서 몇 안 되는 라디오를 가지고 있는 송호의 다락방. 낡은 라디오에서 지지직거리며 잡음이 흘러나옵니다.
+      <div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"${name} 님, 오늘 정오에 중대 발표가 있을 거래요. 그런데… 이게 무슨 발표일까요?"</span></div>`,
       prompt:'정오까지 당신은 어떻게 행동해야 할까요?',
       choices:[
         { text:'동네방네 "곧 우리가 해방된다!"며 소문을 낸다.', correct:false,
@@ -1056,7 +1056,7 @@ function getScenes() {
       stageNum:5, type:'story', scene: IMAGES.stage4,
       title:'정오 5분 전',
       narration:`방 안의 공기가 팽팽하게 당겨집니다.<br><br>
-      소식을 들은 이웃들이 하나둘 다락방으로 모여들었습니다. 송호의 어머니는 마른 손으로 치맛자락만 만지작거리고, 옆집 노인은 라디오에 귀를 바짝 붙인 채 미동조차 없습니다. 아무도 입을 열지 않습니다. 괘종시계 초침 소리만이 유난히 크게 들립니다.<br><br>
+      소식을 들은 이웃들이 소식을 궁금해 하며, 마을에 몇 안 되는 라디오가 놓인 송호의 다락방으로 모여들었습니다. 송호의 어머니는 마른 손으로 치맛자락만 만지작거리고, 옆집 노인은 라디오에 귀를 바짝 붙인 채 미동조차 없습니다. 아무도 입을 열지 않습니다. 괘종시계추 소리만이 유난히 크게 들립니다.<br><br>
       <i>— 무슨 소식일까? 큰일이 일어난 거면 어쩌지.</i><br><br>
       누군가 마른침을 삼키는 소리가 납니다. 창밖의 매미 소리마저 숨을 죽인 듯 조용합니다.<br><br>
       마침내 시계가 정오를 알립니다.`,
@@ -1071,8 +1071,8 @@ function getScenes() {
       방송이 끝나고 무거운 정적이 흐릅니다.<br><br>
       그때 — 바깥에서 누군가 외치는 소리가 담을 넘어 들려옵니다.<br>
       <b>"전쟁이 끝났다! 일본이 항복했다!"</b><br><br>
-      송호의 어머니가 소리 없이 눈물을 흘립니다. 35년. 우리말로 마음껏 이름을 부르지 못했던 그 길고 긴 시간이, 지금 이 순간 끝나고 있습니다.<br><br>
-      거리 곳곳에서 함성이 터져 나옵니다. 오늘, 우리는 이 날을 무엇이라 부를까요?`,
+      송호의 어머니가 소리 없이 눈물을 흘립니다. 35년. 우리말을 자유롭게 쓸 수 없었던 그 길고 긴 시간이, 지금 이 순간 끝나고 있습니다.<br><br>
+      골목 어귀에서 몇몇 사람들이 서로의 얼굴을 마주 보며 웅성이기 시작합니다. 아직 무슨 일이 벌어진 건지 다들 반신반의하는 눈치입니다. 오늘, 우리는 이 날을 무엇이라 부를까요?`,
       prompt:'오늘, 이 날의 이름은 무엇일까요?',
       choices:[
         { text:'광복절', correct:true, next:'ending' },
@@ -1246,7 +1246,8 @@ function render(){
         <div class="eyebrow">1945년 8월 15일, 정오 이후</div>
         <h1 class="title">광복</h1>
         <div class="narration" style="text-align:left;">
-          밖으로 나가니 거리는 이미 태극기 물결입니다. 대체 어디에 숨겨 두었던 걸까요. 사람들 손마다, 품속에서 꺼낸 태극기가 들려 있습니다. 처음 보는 사람들끼리 부둥켜안고 울고 웃으며 목이 터져라 만세를 외칩니다. 어제까지 고개를 숙이고 걷던 사람들이 오늘은 하늘을 향해 두 팔을 뻗고 있습니다.<br><br>
+          며칠이 지나자 골목의 웅성임은 확신으로 바뀌었습니다. 방송 내용이 난해하고 일본의 통제가 일부 남아 있어 8월 15일 당일에는 다들 반신반의했지만, 해방의 소식은 그 며칠 사이 입에서 입으로, 신문으로, 벽보를 통해 온 나라로 퍼져나갔습니다. 그리고 마침내 사람들이 품속 깊이 감춰두었던 태극기를 꺼내 들면서, 거리마다 태극기 물결이 번져가기 시작합니다.<br><br> 처음 보는 사람들끼리 부둥켜안고 울고 웃으며 목이 터져라 만세를 외칩니다. 며칠 전까지 고개를 숙이고 걷던 사람들이 오늘은 하늘을 향해 두 팔을 뻗고 있습니다.<br><br>
+          그때, 낯익은 얼굴이 눈에 들어옵니다. 그토록 위세등등하던 그 순사입니다. 제복을 벗어던진 채 인파 사이로 숨어들려 하지만, 몇몇 사람이 그를 알아보고 손가락질하며 소리칩니다. "저자다, 앞잡이 노릇하던 자가 저기 있다!" 누군가 던진 돌멩이가 발치에 떨어지자, 그는 황급히 등을 돌려 골목 사이로 달아납니다. 며칠 전 ${name} 님을 매섭게 다그치던 그 사람이, 오늘은 쫓기는 처지가 되었습니다.<br><br>
           송호가 젖은 눈으로 나지막이 말합니다.
           <div class="speaker-line"><span class="speaker">송호</span><span class="dialogue">"이 날을 끝내 보지 못하고 떠난 분들이… 참 많아요. 감옥에서, 낯선 이국땅에서, 이름조차 남기지 못한 채로요. 고마웠어요, ${name} 님."</span></div>
           그렇습니다. 오늘 이 함성 뒤에는 이 아침을 맞지 못한 수많은 사람의 시간이 쌓여 있습니다. 오늘의 기쁨은 거저 온 것이 아닙니다.<br><br>
@@ -1258,9 +1259,11 @@ function render(){
           <b style="display:block; margin-bottom:8px;">오늘 확인한 역사적 사실들</b>
           <div class="recap-list">
             <div class="recap-item"><span class="bullet">·</span><span class="recap-text">1945년 8월 15일 정오, 일왕의 항복 선언 라디오 방송이 전해졌습니다.</span></div>
-            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">방송은 잡음이 심하고 어려운 문어체 일본어였기 때문에 당시 사람들도 곧바로 알아듣기 어려웠습니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">방송은 잡음이 심하고 어려운 문어체 일본어였기 때문에 당일에는 상황을 곧바로 알기 어려웠습니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">해방의 소식은 며칠에 걸쳐 입에서 입으로, 신문으로, 벽보를 통해 전국으로 퍼져나갔으며 만세의 함성으로 이어졌습니다.</span></div>
             <div class="recap-item"><span class="bullet">·</span><span class="recap-text">이 날을 기념하여 8월 15일을 <b>광복절</b>이라 부릅니다. '광복(光復)'은 '빛을 되찾다', 즉 빼앗긴 국권을 되찾음을 뜻합니다.</span></div>
             <div class="recap-item"><span class="bullet">·</span><span class="recap-text">1919년 3월 1일 만세 운동 → <b>삼일절</b> / 1948년 7월 17일 헌법 공포 → <b>제헌절</b>과 구분해야 합니다.</span></div>
+            <div class="recap-item"><span class="bullet">·</span><span class="recap-text">광복 직후에는 평소 원성을 샀던 친일 관리나 순사가 주민들에게 항의를 받거나 자리에서 쫓겨나는 일이 각지에서 벌어지기도 했습니다. 하지만 이는 즉흥적·지역적인 움직임이었을 뿐, 국가 차원의 체계적인 친일파 청산으로 이어지지는 못했습니다. 1948년 반민족행위특별조사위원회(반민특위)가 구성되었지만 이듬해 정치적 압력으로 해체되면서, 상당수의 친일 인사들이 처벌을 피해 갔습니다.</span></div>
             <div class="recap-item"><span class="bullet">·</span><span class="recap-text">광복은 수많은 사람의 희생과 헌신 위에 이루어진 값진 결실입니다.</span></div>
           </div>
         </div>
